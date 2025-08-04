@@ -1,4 +1,3 @@
-
 import React from "react";
 
 export default function HomePage() {
@@ -20,6 +19,21 @@ export default function HomePage() {
       image: "/service3.jpg",
       description:
         "We offer durable and effective waterproofing coatings to protect your home from moisture and leaks."
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "Ravi Kumar",
+      message: "Sumitra Paints transformed our home with vibrant colors and excellent service! Highly recommend!",
+    },
+    {
+      name: "Pooja Sharma",
+      message: "Professional team and amazing product range. We are truly satisfied with the results.",
+    },
+    {
+      name: "Amit Verma",
+      message: "Best paint quality I've experienced. Long-lasting and beautifully finished walls.",
     }
   ];
 
@@ -111,6 +125,19 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="bg-[#f2f9f4] px-6 py-16">
+        <h3 className="text-3xl font-bold text-center text-[#4c8c6a] mb-10">What Our Customers Say</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <div key={i} className="bg-white p-6 rounded shadow hover:shadow-lg transition">
+              <p className="text-gray-700 italic">"{t.message}"</p>
+              <p className="mt-4 font-semibold text-[#4c8c6a]">- {t.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Contact Form */}
       <section
        id="contact" 
@@ -184,6 +211,7 @@ export default function HomePage() {
       </footer>
       <a
        href="https://wa.me/917299865001"
+ 
        target="_blank"
        rel="noopener noreferrer"
        className="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition z-50">

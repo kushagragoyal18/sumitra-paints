@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 export default function HomePage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
   const services = [
     {
       title: "Interior Wall Painting",
@@ -45,12 +50,26 @@ export default function HomePage() {
           <img src="/logo.png" alt="Sumitra Paints Logo" className="w-10 h-10" />
           <h1 className="text-xl font-bold">Sumitra's</h1>
         </div>
-        <nav className="flex gap-6 text-sm font-medium">
+        <nav className="hidden md:flex gap-6 text-sm font-medium">
           <a href="#products" className="hover:text-[#4c8c6a]">Our Products</a>
           <a href="#about" className="hover:text-[#4c8c6a]">About Us</a>
           <a href="#contact" className="hover:text-[#4c8c6a]">Contact Us</a>
         </nav>
+        <div className="md:hidden">
+          <button onClick={toggleMenu}>
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </header>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#a8d5ba] px-4 py-4 flex flex-col space-y-4 text-sm font-medium shadow">
+          <a href="#products" className="hover:text-[#4c8c6a]">Our Products</a>
+          <a href="#about" className="hover:text-[#4c8c6a]">About Us</a>
+          <a href="#contact" className="hover:text-[#4c8c6a]">Contact Us</a>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section
@@ -140,45 +159,46 @@ export default function HomePage() {
 
       {/* Contact Form */}
       <section
-       id="contact" 
-       className="px-6 py-16 text-gray-800 bg-cover bg-center bg-no-repeat"
-       style={{ backgroundImage: "url('/contact-bg.jpg')" }}>
-       <div className="bg-white/80 backdrop-blur-sm p-8 rounded shadow-lg"></div>
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12">
-          <form className="bg-white text-gray-800 rounded p-6 shadow space-y-4">
-            <div>
-              <label className="text-sm font-semibold">Name *</label>
-              <input type="text" placeholder="Your Name" className="w-full border p-2 rounded mt-1" />
-            </div>
-            <div>
-              <label className="text-sm font-semibold">Email *</label>
-              <input type="email" placeholder="Your Email" className="w-full border p-2 rounded mt-1" />
-            </div>
-            <div>
-              <label className="text-sm font-semibold">Phone *</label>
-              <input type="tel" placeholder="Your Phone" className="w-full border p-2 rounded mt-1" />
-            </div>
-            <div>
-              <label className="text-sm font-semibold">Message *</label>
-              <textarea className="w-full border p-2 rounded mt-1" rows="4" placeholder="Your Message"></textarea>
-            </div>
-            <button className="bg-[#4c8c6a] text-white px-4 py-2 rounded hover:bg-[#3a6f54]">
-              Submit Now
-            </button>
-          </form>
+        id="contact"
+        className="px-6 py-16 text-gray-800 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/contact-bg.jpg')" }}>
+        <div className="bg-white/80 backdrop-blur-sm p-8 rounded shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12">
+            <form className="bg-white text-gray-800 rounded p-6 shadow space-y-4">
+              <div>
+                <label className="text-sm font-semibold">Name *</label>
+                <input type="text" placeholder="Your Name" className="w-full border p-2 rounded mt-1" />
+              </div>
+              <div>
+                <label className="text-sm font-semibold">Email *</label>
+                <input type="email" placeholder="Your Email" className="w-full border p-2 rounded mt-1" />
+              </div>
+              <div>
+                <label className="text-sm font-semibold">Phone *</label>
+                <input type="tel" placeholder="Your Phone" className="w-full border p-2 rounded mt-1" />
+              </div>
+              <div>
+                <label className="text-sm font-semibold">Message *</label>
+                <textarea className="w-full border p-2 rounded mt-1" rows="4" placeholder="Your Message"></textarea>
+              </div>
+              <button className="bg-[#4c8c6a] text-white px-4 py-2 rounded hover:bg-[#3a6f54]">
+                Submit Now
+              </button>
+            </form>
 
-          <div className="space-y-6 flex flex-col justify-center">
-            <div>
-              <h4 className="text-4xl font-bold">100+</h4>
-              <p>Happy Customers</p>
-            </div>
-            <div>
-              <h4 className="text-4xl font-bold">50</h4>
-              <p>Products</p>
-            </div>
-            <div>
-              <h4 className="text-4xl font-bold">1 Year</h4>
-              <p>Warranty</p>
+            <div className="space-y-6 flex flex-col justify-center">
+              <div>
+                <h4 className="text-4xl font-bold">100+</h4>
+                <p>Happy Customers</p>
+              </div>
+              <div>
+                <h4 className="text-4xl font-bold">50</h4>
+                <p>Products</p>
+              </div>
+              <div>
+                <h4 className="text-4xl font-bold">1 Year</h4>
+                <p>Warranty</p>
+              </div>
             </div>
           </div>
         </div>
@@ -209,15 +229,15 @@ export default function HomePage() {
           &copy; {new Date().getFullYear()} Sumitra Paints | All Rights Reserved
         </div>
       </footer>
-      <a
-       href="https://wa.me/917299865001"
- 
-       target="_blank"
-       rel="noopener noreferrer"
-       className="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition z-50">
-       <i className="fab fa-whatsapp text-2xl"></i>
-     </a>
 
+      {/* WhatsApp Button */}
+      <a
+        href="https://wa.me/917299865001"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition z-50">
+        <i className="fab fa-whatsapp text-2xl"></i>
+      </a>
     </div>
   );
 }

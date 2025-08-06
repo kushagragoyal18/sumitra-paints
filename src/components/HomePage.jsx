@@ -240,7 +240,7 @@ export default function HomePage() {
 
             <div className="space-y-6 flex flex-col justify-center text-center md:text-left">
               <div>
-                <h4 className="text-4xl font-bold text-[#4c8c6a]">100+</h4>
+                <h4 className="text-4xl font-bold text-[#4c8c6a]">1000+</h4>
                 <p className="text-gray-700">Happy Customers</p>
               </div>
               <div>
@@ -274,7 +274,7 @@ export default function HomePage() {
             <h5 className="font-bold mb-2 text-lg">Get in Touch</h5>
             <p>Address- O-864 Gaur City Center, Sector 4, Greater Noida (W), Uttar Pradesh, 201009, India</p>
             <p>Email- care@sumitrapaints.com</p>
-            <p>Phone- +91-7895079139</p>
+            <p>Phone- +91-8882689139</p>
           </div>
         </div>
         <div className="text-center mt-8 border-t border-white/10 pt-4 text-xs">

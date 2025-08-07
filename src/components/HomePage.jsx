@@ -5,6 +5,11 @@ export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0); // State for current slide
 
+  // Form submission state
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(null);
+
   // Array of images for the hero section slider
   // IMPORTANT: Replace these with your actual image paths/URLs.
   // The first image (index 0) will have the text "Har Deewaar Ki Apni Pehchaan !".
@@ -28,6 +33,43 @@ export default function HomePage() {
     // Cleanup interval on component unmount
     return () => clearInterval(slideInterval);
   }, [heroImages.length]); // Re-run effect if heroImages array length changes
+
+  // Form submission handler
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    try {
+      // Replace 'YOUR_FORMSPREE_ENDPOINT_URL' with your actual Formspree endpoint
+      const response = await fetch("https://formspree.io/f/xeozpege", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        form.reset(); // Clear the form fields
+      } else {
+        const data = await response.json();
+        if (data.errors) {
+          setError(data.errors.map(err => err.message).join(', '));
+        } else {
+          setError("Oops! There was a problem with your submission.");
+        }
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const services = [
     {
@@ -95,7 +137,13 @@ export default function HomePage() {
       )}
 
       {/* Hero Section with Slider */}
-      <section className="relative h-[85vh] overflow-hidden"> {/* Added overflow-hidden to contain sliding elements */}
+      {/*
+        KEY CHANGE: The hero section height is now responsive.
+        - On mobile, it's 60vh (60% of viewport height).
+        - On medium screens and up, it's 85vh.
+        This prevents the section from being too tall on small devices.
+      */}
+      <section className="relative h-[60vh] md:h-[85vh] overflow-hidden">
         {/* Container for all slides - this div will slide horizontally */}
         <div
           className="absolute inset-0 flex transition-transform duration-1000 ease-in-out"
@@ -109,9 +157,15 @@ export default function HomePage() {
             >
               <div className="absolute inset-0 bg-black opacity-30" />
               {/* Conditional rendering for the text */}
+              {/*
+                KEY CHANGE: The text is now responsive.
+                - On mobile, the font size is smaller (text-3xl) and the position is different (bottom-10, right-4).
+                - On medium screens and up, it uses the original font size (text-5xl) and position (right-16).
+                - The <br /> tag has been removed to allow for natural text wrapping on all screen sizes.
+              */}
               {idx === 0 && ( // Text only on the first slide
-                <h2 className="absolute bottom-1/2 right-16 transform translate-y-1/2 text-5xl font-semibold leading-snug text-right z-10 drop-shadow-lg text-white">
-                  Har Deewaar Ki <br /> Apni Pehchaan !
+                <h2 className="absolute bottom-10 md:bottom-1/2 right-4 md:right-16 transform md:translate-y-1/2 text-3xl md:text-5xl font-semibold leading-snug text-right z-10 drop-shadow-lg text-white">
+                  Har Deewaar Ki Apni Pehchaan !
                 </h2>
               )}
             </div>
@@ -216,25 +270,51 @@ export default function HomePage() {
       >
         <div className="bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-lg">
           <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12">
-            <form className="bg-white text-gray-800 rounded-lg p-6 shadow space-y-4">
+            {/* Form is updated to use Formspree and handle submission state */}
+            <form
+              className="bg-white text-gray-800 rounded-lg p-6 shadow space-y-4"
+              onSubmit={handleFormSubmit}
+              // The action URL will be replaced with your unique Formspree URL.
+              // Formspree will handle the submission and email delivery.
+              action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT_URL"
+              method="POST"
+            >
+              {/* Display success message */}
+              {isSubmitted && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                  <strong className="font-bold">Success!</strong>
+                  <span className="block sm:inline ml-2">Your message has been sent. Thank you!</span>
+                </div>
+              )}
+              {/* Display error message */}
+              {error && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                  <strong className="font-bold">Error!</strong>
+                  <span className="block sm:inline ml-2">{error}</span>
+                </div>
+              )}
               <div>
                 <label htmlFor="name" className="block text-sm font-semibold mb-1">Name *</label>
-                <input type="text" id="name" placeholder="Your Name" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" required />
+                <input type="text" id="name" name="name" placeholder="Your Name" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" required />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold mb-1">Email *</label>
-                <input type="email" id="email" placeholder="Your Email" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" required />
+                <input type="email" id="email" name="email" placeholder="Your Email" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" required />
               </div>
               <div>
                 <label htmlFor="phone" className="block text-sm font-semibold mb-1">Phone *</label>
-                <input type="tel" id="phone" placeholder="Your Phone" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" required />
+                <input type="tel" id="phone" name="phone" placeholder="Your Phone" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" required />
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-semibold mb-1">Message *</label>
-                <textarea id="message" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" rows="4" placeholder="Your Message" required></textarea>
+                <textarea id="message" name="message" className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4c8c6a] transition-all duration-200" rows="4" placeholder="Your Message" required></textarea>
               </div>
-              <button className="bg-[#4c8c6a] text-white px-6 py-3 rounded-full hover:bg-[#3a6f54] transition-all duration-200 shadow-md hover:shadow-lg">
-                Submit Now
+              <button
+                className="bg-[#4c8c6a] text-white px-6 py-3 rounded-full hover:bg-[#3a6f54] transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Submitting..." : "Submit Now"}
               </button>
             </form>
 

@@ -25,32 +25,12 @@ export default function HomePage() {
   // Function to generate the product data with your local image paths
   const generateProductData = () => {
     const productDescriptions = [
-      `🎨 Axee Advance Emulsion – Style Meets Strength
-A perfect blend of elegance and endurance, Axee Advance Emulsion gives your walls a smooth, modern finish while keeping them strong against daily wear and tear. Just like Weather Guard, it’s built to deliver both beauty and protection for any space.
-Versatile application: Suitable for both interior & exterior walls.
-Smart coverage: 130–150 sq. ft. per litre in a single coat.
-Smooth finish: Leaves your walls looking stylish, fresh, and refined.
-With Axee Advance Emulsion, you don’t just paint walls — you add a touch of elegance that lasts. ✨`,
       `Eurolite Extra Shine Paint
 Bring your walls to life with a radiant glow ✨. Our high-sheen masterpiece is crafted to deliver a smooth, luxurious finish that transforms any space into a statement of style.
 Durability you can trust: Lasts up to 5 years of brilliance.
 Versatile beauty: Perfect for both interior elegance and exterior strength.
 Effortless coverage: Just 1 litre paints up to 180–200 sq. ft. in a single coat.
 With Eurolite Extra Shine, every wall becomes a canvas of lasting shine and sophistication. 🎨`,
-      `🌟 Super Gloss – Supreme Shine at a Smart Price
-Affordable yet extraordinary, Super Gloss is our supreme product in a genuine price range. While it’s technically a distemper, its premium quality rivals that of interior emulsions, giving your walls a finish that feels luxurious without the high cost.
-Supreme value: Premium quality at a pocket-friendly price.
-Interior excellence: Distemper with the look & feel of an emulsion.
-Easy application: Mix with ½ litre of water per kg of product for best results.
-Smooth & stylish finish: Keeps your interiors looking elegant and fresh.
-With Super Gloss, you get the shine of emulsion at the price of distemper — the smart choice for beautiful interiors. ✨`,
-      `✨ Avon Shine – Our Most Loved Classic
-When it comes to trusted brilliance, nothing beats Avon Shine. As our most in-demand paint, it’s designed to bring vibrant beauty and lasting protection to every wall — inside or out.
-Customer favorite: The most demanded product in our range.
-Dual purpose: Perfect for both interior charm and exterior strength.
-Reliable coverage: 120 sq. ft. per litre in a single coat.
-Lasting appeal: A smooth, stylish finish that keeps your walls glowing.
-With Avon Shine, you’re not just painting — you’re choosing a trusted favorite that has earned its place in countless homes. 🏡💫`,
       `🛡️ Weather Guard – The Shield Your Walls Deserve
 Built to protect and beautify, Weather Guard is your ultimate defense against time and weather. Designed for both exterior strength and interior elegance, it ensures your walls stay fresh, vibrant, and protected.
 Superior protection: Acts as a strong guard for your walls.
@@ -59,6 +39,26 @@ Easy application: Mix 50% water per litre and apply 2 coats for best results.
 Washable & long-lasting: Keep your walls looking new with easy cleaning.
 Smart coverage: Delivers 130–150 sq. ft. per litre in a single coat.
 With Weather Guard, your walls don’t just shine — they stand strong against the elements. 🌦️✨`,
+      `🎨 Axee Advance Emulsion – Style Meets Strength
+A perfect blend of elegance and endurance, Axee Advance Emulsion gives your walls a smooth, modern finish while keeping them strong against daily wear and tear. Just like Weather Guard, it’s built to deliver both beauty and protection for any space.
+Versatile application: Suitable for both interior & exterior walls.
+Smart coverage: 130–150 sq. ft. per litre in a single coat.
+Smooth finish: Leaves your walls looking stylish, fresh, and refined.
+With Axee Advance Emulsion, you don’t just paint walls — you add a touch of elegance that lasts. ✨`,
+      `✨ Avon Shine – Our Most Loved Classic
+When it comes to trusted brilliance, nothing beats Avon Shine. As our most in-demand paint, it’s designed to bring vibrant beauty and lasting protection to every wall — inside or out.
+Customer favorite: The most demanded product in our range.
+Dual purpose: Perfect for both interior charm and exterior strength.
+Reliable coverage: 120 sq. ft. per litre in a single coat.
+Lasting appeal: A smooth, stylish finish that keeps your walls glowing.
+With Avon Shine, you’re not just painting — you’re choosing a trusted favorite that has earned its place in countless homes. 🏡💫`,
+      `🌟 Super Gloss – Supreme Shine at a Smart Price
+Affordable yet extraordinary, Super Gloss is our supreme product in a genuine price range. While it’s technically a distemper, its premium quality rivals that of interior emulsions, giving your walls a finish that feels luxurious without the high cost.
+Supreme value: Premium quality at a pocket-friendly price.
+Interior excellence: Distemper with the look & feel of an emulsion.
+Easy application: Mix with ½ litre of water per kg of product for best results.
+Smooth & stylish finish: Keeps your interiors looking elegant and fresh.
+With Super Gloss, you get the shine of emulsion at the price of distemper — the smart choice for beautiful interiors. ✨`,
       `💎 High Gloss – Premium Finish at a Genuine Price
 Engineered for elegance, High Gloss is our supreme product at a genuine price point. Although classified as a distemper, its refined quality equals that of interior emulsions, offering your walls a glossy, smooth finish that looks far more premium than it costs.
 Great value: Premium performance at an affordable price.
@@ -211,8 +211,8 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
       {/* Header */}
       <header className="bg-[#a8d5ba] text-gray-900 p-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="Sumitra Paints Logo" className="w-10 h-10 rounded-full" />
-          <h1 className="text-xl font-bold">Sumitra Paints and Chemicals </h1>
+          {/* Updated logo with the new image */}
+          <img src="/image_ccdd21.png" alt="Sumitra Paints and Chemicals Logo" className="w-auto h-14 md:h-20" />
         </div>
         <nav className="hidden md:flex gap-6 text-sm font-medium">
           <a href="#products" className="hover:text-[#4c8c6a] transition-colors duration-200">Our Products</a>
@@ -360,7 +360,7 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
             <form
               className="bg-white text-gray-800 rounded-lg p-6 shadow space-y-4"
               onSubmit={handleFormSubmit}
-              action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT_URL"
+              action="https://formspree.io/f/xeozpege"
               method="POST"
             >
               {isSubmitted && (
@@ -480,7 +480,8 @@ function ProductDetailsPage({ product, onBack }) {
         >
           <ArrowLeft size={24} /> <span className="hidden md:inline">Back to Products</span>
         </button>
-        <h1 className="text-xl font-bold">Sumitra Paints and Chemicals </h1>
+        {/* Updated logo with the new image */}
+        <img src="/image_ccdd21.png" alt="Sumitra Paints and Chemicals Logo" className="w-auto h-14 md:h-20" />
         <div className="w-10 h-10"></div>
       </header>
 

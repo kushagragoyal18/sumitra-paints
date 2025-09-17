@@ -26,26 +26,29 @@ export default function App() {
   const generateProductData = () => {
     // A list of the specific product names
     const productNames = [
-      "Eurolite Extra Shine Paint",
-      "Weather Guard",
-      "Axee Advance Emulsion",
-      "Avon Shine",
-      "Super Gloss",
-      "High Gloss",
+      "Eurolite Extra Shine Emulsion",
+      "Weather Guard Exterior Emulsion",
+      "Axee Advance Exterior Emulsion ",
+      "Avone Shine Exterior and Interior Emulsion",
+      "Super Gloss Acrylic Distemper",
+      "High Gloss Acrylic Distemper ",
       "Ujjwal Gold Interior Primer",
       "Gold Gloss Metallic Paint",
-      "Silver Gloss",
-      "Gold Coat",
-      "Silver Touch"
+      "Silver Gloss Metallic Paint ",
+      "Oil Base Golden Paint ",
+      "Silver Touch -Oil Base Alluminium Paints"
     ];
 
     const productDescriptions = [
-      `Eurolite Extra Shine Paint
+      `Eurolite Extra Shine Emulsion -20 percent water in 1 lit Paint
 Bring your walls to life with a radiant glow ✨. Our high-sheen masterpiece is crafted to deliver a smooth, luxurious finish that transforms any space into a statement of style.
-Durability you can trust: Lasts up to 5 years of brilliance.
-Versatile beauty: Perfect for both interior elegance and exterior strength.
-Effortless coverage: Just 1 litre paints up to 180–200 sq. ft. in a single coat.
-With Eurolite Extra Shine, every wall becomes a canvas of lasting shine and sophistication. 🎨`,
+
+✔ Durability you can trust: Lasts up to 5 years of brilliance.
+✔ Versatile beauty: Perfect for both interior elegance and exterior strength.
+✔ Effortless coverage: Just 1 litre paints up to 180–200 sq. ft. in a single coat.
+✔ Easy application: Add 30% water per litre for optimal performance and smooth spreading.
+
+With Eurolite Extra Shine, every wall becomes a canvas of lasting shine and sophistication. ✨`,
       `🛡️ Weather Guard – The Shield Your Walls Deserve
 Built to protect and beautify, Weather Guard is your ultimate defense against time and weather. Designed for both exterior strength and interior elegance, it ensures your walls stay fresh, vibrant, and protected.
 Superior protection: Acts as a strong guard for your walls.
@@ -137,6 +140,16 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
 
     return () => clearInterval(slideInterval);
   }, [heroImages.length]);
+  
+  // UseEffect to scroll to the top when the page changes to productDetail
+  useEffect(() => {
+    if (currentPage === "productDetail") {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }, [currentPage]);
 
   // Form submission handler
   const handleFormSubmit = async (event) => {
@@ -227,7 +240,7 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
       <header className="bg-[#a8d5ba] text-gray-900 p-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
         <div className="flex items-center gap-2">
           {/* Updated logo to have the image next to the text */}
-          <img src="/sumitra-logo.png" alt="Sumitra Paints Logo" className="w-auto h-14 md:h-20 object-contain" />
+          <img src="/logo.png" alt="Sumitra Paints Logo" className="w-auto h-14 md:h-20 object-contain" />
           <h1 className="text-xl md:text-2xl font-bold text-[#2e4e3f]">Sumitra Paints and Chemicals</h1>
         </div>
         <nav className="hidden md:flex gap-6 text-sm font-medium">
@@ -498,7 +511,7 @@ function ProductDetailsPage({ product, onBack }) {
         </button>
         {/* Updated logo to have the image next to the text */}
         <div className="flex items-center gap-2">
-          <img src="/sumitra-logo.png" alt="Sumitra Paints Logo" className="w-auto h-14 md:h-20 object-contain" />
+          <img src="/logo.png" alt="Sumitra Paints Logo" className="w-auto h-14 md:h-20 object-contain" />
           <h1 className="text-xl md:text-2xl font-bold text-[#2e4e3f]">Sumitra Paints and Chemicals</h1>
         </div>
         <div className="w-10 h-10"></div>

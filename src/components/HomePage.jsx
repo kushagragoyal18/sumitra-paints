@@ -266,7 +266,7 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
               <div className="absolute inset-0 bg-black opacity-30" />
               {idx === 0 && (
                 <h2 className="absolute bottom-10 md:bottom-1/2 right-4 md:right-16 transform md:translate-y-1/2 text-3xl md:text-5xl font-semibold leading-snug text-right z-10 drop-shadow-lg text-white">
-                  Har Deewaar Ki Apni Pehchaan !
+                  Har Deewaar Ki Apni Pehchaan 
                 </h2>
               )}
             </div>
@@ -294,7 +294,7 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
             <h3 className="text-2xl font-bold text-[#4c8c6a] mb-1">About Us</h3>
             <h4 className="text-xl font-semibold mb-4">Welcome To Sumitra Paints</h4>
             <p className="mb-3 leading-relaxed">
-              Sumitra Paints is a leading paint manufacturing company based in India. Founded in 2020, we’ve become one of the largest producers of decorative, industrial, and automotive paints.
+              Sumitra Paints is a leading paint manufacturing company based in India. Founded in 2020, we’ve become one of the finest producers of decorative, industrial, and automotive paints.
             </p>
             <p className="leading-relaxed">
               We focus on quality, innovation, and sustainable solutions to deliver premium results to our customers nationwide.

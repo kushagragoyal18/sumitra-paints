@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, ArrowLeft } from "lucide-react";
 
-export default function HomePage() {
+export default function App() {
   // State for page navigation
   const [currentPage, setCurrentPage] = useState("home");
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -17,13 +17,28 @@ export default function HomePage() {
   // Array of images for the hero section slider
   const heroImages = [
     "/hero-bg.jpg", // Your existing image (first image)
-    "/slide1.jpg", // Example image 1
+    "https://nipponpaint.co.in/wp-content/uploads/2024/09/image-13-min.jpeg",
     "https://www.giffywalls.in/cdn/shop/files/9U5Z7B_2_cdcc3baa-a3c1-4f1b-ba1d-9ddefb239091.jpg?quality=90&v=1734200062&width=1326", // Example image 2
     "https://www.buildingmaterialreporter.com/uploads/blogs/files/07%20(6).jpg" // Example image 3
   ];
 
   // Function to generate the product data with your local image paths
   const generateProductData = () => {
+    // A list of the specific product names
+    const productNames = [
+      "Eurolite Extra Shine Paint",
+      "Weather Guard",
+      "Axee Advance Emulsion",
+      "Avon Shine",
+      "Super Gloss",
+      "High Gloss",
+      "Ujjwal Gold Interior Primer",
+      "Gold Gloss Metallic Paint",
+      "Silver Gloss",
+      "Gold Coat",
+      "Silver Touch"
+    ];
+
     const productDescriptions = [
       `Eurolite Extra Shine Paint
 Bring your walls to life with a radiant glow ✨. Our high-sheen masterpiece is crafted to deliver a smooth, luxurious finish that transforms any space into a statement of style.
@@ -81,7 +96,7 @@ With Gold Gloss, ordinary surfaces transform into striking highlights of sophist
       `✨ Silver Gloss – Sleek Metallic Shine for Every Surface
 Add a touch of elegance with Silver Gloss Metallic Paint. Ideal for exterior gates and decorative designs, it delivers a smooth, reflective finish that makes every detail stand out with sophistication.
 Metallic brilliance: Gives a striking, polished shine.
-Exterior-ready: Perfect for gates, grills, and outdoor accents.
+Exterior-ready: Ideal for gates, grills, and outdoor accents.
 Decorative excellence: Enhances designs with a shimmering, eye-catching effect.
 Durable finish: Maintains vibrancy and shine over time.
 With Silver Gloss, ordinary surfaces are transformed into sleek highlights of style and elegance. ✨`,
@@ -102,7 +117,7 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
     ];
     return Array.from({ length: 11 }, (_, i) => ({
       id: i + 1,
-      name: `Exclusive Product ${i + 1}`,
+      name: productNames[i],
       image: `/products/paint${i + 1}.jpg`,
       description: productDescriptions[i] || "Product description not available."
     }));
@@ -211,8 +226,9 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
       {/* Header */}
       <header className="bg-[#a8d5ba] text-gray-900 p-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
         <div className="flex items-center gap-2">
-          {/* Updated logo with the new image */}
-          <img src="/image_ccdd21.png" alt="Sumitra Paints and Chemicals Logo" className="w-auto h-14 md:h-20" />
+          {/* Updated logo to have the image next to the text */}
+          <img src="/sumitra-logo.png" alt="Sumitra Paints Logo" className="w-auto h-14 md:h-20 object-contain" />
+          <h1 className="text-xl md:text-2xl font-bold text-[#2e4e3f]">Sumitra Paints and Chemicals</h1>
         </div>
         <nav className="hidden md:flex gap-6 text-sm font-medium">
           <a href="#products" className="hover:text-[#4c8c6a] transition-colors duration-200">Our Products</a>
@@ -480,8 +496,11 @@ function ProductDetailsPage({ product, onBack }) {
         >
           <ArrowLeft size={24} /> <span className="hidden md:inline">Back to Products</span>
         </button>
-        {/* Updated logo with the new image */}
-        <img src="/image_ccdd21.png" alt="Sumitra Paints and Chemicals Logo" className="w-auto h-14 md:h-20" />
+        {/* Updated logo to have the image next to the text */}
+        <div className="flex items-center gap-2">
+          <img src="/sumitra-logo.png" alt="Sumitra Paints Logo" className="w-auto h-14 md:h-20 object-contain" />
+          <h1 className="text-xl md:text-2xl font-bold text-[#2e4e3f]">Sumitra Paints and Chemicals</h1>
+        </div>
         <div className="w-10 h-10"></div>
       </header>
 

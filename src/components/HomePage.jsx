@@ -2,29 +2,124 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, ArrowLeft } from "lucide-react";
 
 export default function App() {
-  // State for page navigation
   const [currentPage, setCurrentPage] = useState("home");
   const [selectedProduct, setSelectedProduct] = useState(null);
-
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-
-  // Form submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState(null);
 
-  // Array of images for the hero section slider
   const heroImages = [
-    "/hero-bg.jpg", // Your existing image (first image)
+    "/hero-bg.jpg",
     "https://nipponpaint.co.in/wp-content/uploads/2024/09/image-13-min.jpeg",
-    "https://www.giffywalls.in/cdn/shop/files/9U5Z7B_2_cdcc3baa-a3c1-4f1b-ba1d-9ddefb239091.jpg?quality=90&v=1734200062&width=1326", // Example image 2
-    "https://www.buildingmaterialreporter.com/uploads/blogs/files/07%20(6).jpg" // Example image 3
+    "https://www.giffywalls.in/cdn/shop/files/9U5Z7B_2_cdcc3baa-a3c1-4f1b-ba1d-9ddefb239091.jpg?quality=90&v=1734200062&width=1326",
+    "https://www.buildingmaterialreporter.com/uploads/blogs/files/07%20(6).jpg"
   ];
 
-  // Function to generate the product data with your local image paths
+  const productDescriptions = [
+    [
+      "Eurolite Extra Shine Emulsion -20 percent water in 1 lit Paint",
+      "Bring your walls to life with a radiant glow ✨. Our high-sheen masterpiece is crafted to deliver a smooth, luxurious finish that transforms any space into a statement of style.",
+      "✔ Durability you can trust: Lasts up to 5 years of brilliance.",
+      "✔ Versatile beauty: Perfect for both interior elegance and exterior strength.",
+      "✔ Effortless coverage: Just 1 litre paints up to 180–200 sq. ft. in a single coat.",
+      "✔ Easy application: Add 30% water per litre for optimal performance and smooth spreading.",
+      "With Eurolite Extra Shine, every wall becomes a canvas of lasting shine and sophistication. ✨"
+    ],
+    [
+      "🛡️ Weather Guard – The Shield Your Walls Deserve",
+      "Built to protect and beautify, Weather Guard is your ultimate defense against time and weather. Designed for both exterior strength and interior elegance, it ensures your walls stay fresh, vibrant, and protected.",
+      "Superior protection: Acts as a strong guard for your walls.",
+      "Dual application: Ideal for both inside and outside surfaces.",
+      "Easy application: Mix 50% water per litre and apply 2 coats for best results.",
+      "Washable & long-lasting: Keep your walls looking new with easy cleaning.",
+      "Smart coverage: Delivers 130–150 sq. ft. per litre in a single coat.",
+      "With Weather Guard, your walls don’t just shine — they stand strong against the elements. 🌦️✨"
+    ],
+    [
+      "🎨 Axee Advance Emulsion – Style Meets Strength",
+      "A perfect blend of elegance and endurance, Axee Advance Emulsion gives your walls a smooth, modern finish while keeping them strong against daily wear and tear. Just like Weather Guard, it’s built to deliver both beauty and protection for any space.",
+      "Versatile application: Suitable for both interior & exterior walls.",
+      "Smart coverage: 130–150 sq. ft. per litre in a single coat.",
+      "Smooth finish: Leaves your walls looking stylish, fresh, and refined.",
+      "With Axee Advance Emulsion, you don’t just paint walls — you add a touch of elegance that lasts. ✨"
+    ],
+    [
+      "✨ Avon Shine – Our Most Loved Classic",
+      "When it comes to trusted brilliance, nothing beats Avon Shine. As our most in-demand paint, it’s designed to bring vibrant beauty and lasting protection to every wall — inside or out.",
+      "Customer favorite: The most demanded product in our range.",
+      "Dual purpose: Perfect for both interior charm and exterior strength.",
+      "Reliable coverage: 120 sq. ft. per litre in a single coat.",
+      "Lasting appeal: A smooth, stylish finish that keeps your walls glowing.",
+      "With Avon Shine, you’re not just painting — you’re choosing a trusted favorite that has earned its place in countless homes. 🏡💫"
+    ],
+    [
+      "🌟 Super Gloss – Supreme Shine at a Smart Price",
+      "Affordable yet extraordinary, Super Gloss is our supreme product in a genuine price range. While it’s technically a distemper, its premium quality rivals that of interior emulsions, giving your walls a finish that feels luxurious without the high cost.",
+      "Supreme value: Premium quality at a pocket-friendly price.",
+      "Interior excellence: Distemper with the look & feel of an emulsion.",
+      "Easy application: Mix with ½ litre of water per kg of product for best results.",
+      "Smooth & stylish finish: Keeps your interiors looking elegant and fresh.",
+      "With Super Gloss, you get the shine of emulsion at the price of distemper — the smart choice for beautiful interiors. ✨"
+    ],
+    [
+      "💎 High Gloss – Premium Finish at a Genuine Price",
+      "Engineered for elegance, High Gloss is our supreme product at a genuine price point. Although classified as a distemper, its refined quality equals that of interior emulsions, offering your walls a glossy, smooth finish that looks far more premium than it costs.",
+      "Great value: Premium performance at an affordable price.",
+      "Emulsion-like quality: A distemper that rivals interior emulsions.",
+      "Easy application: Mix with ½ litre of water per kg of product for best results.",
+      "Glossy perfection: Adds a sleek, radiant touch to your interiors.",
+      "With High Gloss, you don’t compromise — you enjoy luxury-quality walls at an everyday price. ✨"
+    ],
+    [
+      "🏆 Ujjwal Gold – The Perfect Start for Lasting Shine",
+      "Every great finish begins with a strong foundation. Ujjwal Gold Interior Primer is specially designed as the initial step in wall painting, applied over wall putty to create a smooth, flawless base. It enhances both coverage and shine, ensuring your walls look stunning once painted.",
+      "Smooth foundation: Levels and prepares the wall surface.",
+      "Enhanced coverage: Boosts paint performance and brilliance.",
+      "Interior specialty: A high-quality cement-based primer crafted for interiors.",
+      "Lasting finish: Helps achieve superior smoothness and long-term shine.",
+      "With Ujjwal Gold, you lay the groundwork for walls that don’t just look painted — they look perfected. ✨"
+    ],
+    [
+      "🥇 Gold Gloss – Metallic Brilliance for Your Surfaces",
+      "Make every detail shine with Gold Gloss Metallic Paint. Perfect for exterior gates and decorative designs, it delivers a rich, luminous finish that catches the eye and elevates the look of any surface.",
+      "Metallic elegance: Adds a sparkling, premium shine.",
+      "Exterior-ready: Ideal for gates, grills, and outdoor accents.",
+      "Decorative touch: Perfect for designs that demand attention and style.",
+      "Durable brilliance: Keeps surfaces looking vibrant and polished.",
+      "With Gold Gloss, ordinary surfaces transform into striking highlights of sophistication. ✨"
+    ],
+    [
+      "✨ Silver Gloss – Sleek Metallic Shine for Every Surface",
+      "Add a touch of elegance with Silver Gloss Metallic Paint. Ideal for exterior gates and decorative designs, it delivers a smooth, reflective finish that makes every detail stand out with sophistication.",
+      "Metallic brilliance: Gives a striking, polished shine.",
+      "Exterior-ready: Ideal for gates, grills, and outdoor accents.",
+      "Decorative excellence: Enhances designs with a shimmering, eye-catching effect.",
+      "Durable finish: Maintains vibrancy and shine over time.",
+      "With Silver Gloss, ordinary surfaces are transformed into sleek highlights of style and elegance. ✨"
+    ],
+    [
+      "✨ Gold Coat – The Ultimate Shine for Every Surface",
+      "Make your designs gleam with Gold Coat, our most dazzling oil-based paint. Perfect for both interior and exterior gates, it delivers a luxurious, reflective finish that turns ordinary surfaces into stunning highlights.",
+      "Maximum shine: Our most brilliant and eye-catching product.",
+      "Versatile application: Ideal for interior and exterior gates and decorative accents.",
+      "Oil-based durability: Long-lasting and resistant to wear.",
+      "Elegant finish: Enhances every design with a golden glow.",
+      "With Gold Coat, every gate and decorative element becomes a statement of sophistication and style. ✨"
+    ],
+    [
+      "✨ Silver Touch – Sleek Aluminium Shine for Your Designs",
+      "Give your surfaces a refined metallic finish with Silver Touch. Perfect for exterior gates and decorative designs, this aluminium-based paint adds a brilliant, reflective look that enhances every detail.",
+      "Metallic elegance: Delivers a polished, eye-catching shine.",
+      "Exterior-ready: Ideal for gates, grills, and outdoor accents.",
+      "Decorative highlight: Makes designs stand out with a sleek, silver finish.",
+      "Long-lasting brilliance: Keeps surfaces looking vibrant and sophisticated.",
+      "With Silver Touch, every gate and design element becomes a shimmering statement of style. ✨"
+    ]
+  ];
+
   const generateProductData = () => {
-    // A list of the specific product names
     const productNames = [
       "Eurolite Extra Shine Emulsion",
       "Weather Guard Exterior Emulsion",
@@ -35,94 +130,15 @@ export default function App() {
       "Ujjwal Gold Interior Primer",
       "Gold Gloss Metallic Paint",
       "Silver Gloss Metallic Paint ",
-      "Oil Base Golden Paint ",
-      "Silver Touch -Oil Base Alluminium Paints"
+      "Goldcoat Oil Base Golden Paint ",
+      "Silver Touch Oil Base Alluminium Paints"
     ];
 
-    const productDescriptions = [
-      `Eurolite Extra Shine Emulsion -20 percent water in 1 lit Paint
-Bring your walls to life with a radiant glow ✨. Our high-sheen masterpiece is crafted to deliver a smooth, luxurious finish that transforms any space into a statement of style.
-
-✔ Durability you can trust: Lasts up to 5 years of brilliance.
-✔ Versatile beauty: Perfect for both interior elegance and exterior strength.
-✔ Effortless coverage: Just 1 litre paints up to 180–200 sq. ft. in a single coat.
-✔ Easy application: Add 30% water per litre for optimal performance and smooth spreading.
-
-With Eurolite Extra Shine, every wall becomes a canvas of lasting shine and sophistication. ✨`,
-      `🛡️ Weather Guard – The Shield Your Walls Deserve
-Built to protect and beautify, Weather Guard is your ultimate defense against time and weather. Designed for both exterior strength and interior elegance, it ensures your walls stay fresh, vibrant, and protected.
-Superior protection: Acts as a strong guard for your walls.
-Dual application: Ideal for both inside and outside surfaces.
-Easy application: Mix 50% water per litre and apply 2 coats for best results.
-Washable & long-lasting: Keep your walls looking new with easy cleaning.
-Smart coverage: Delivers 130–150 sq. ft. per litre in a single coat.
-With Weather Guard, your walls don’t just shine — they stand strong against the elements. 🌦️✨`,
-      `🎨 Axee Advance Emulsion – Style Meets Strength
-A perfect blend of elegance and endurance, Axee Advance Emulsion gives your walls a smooth, modern finish while keeping them strong against daily wear and tear. Just like Weather Guard, it’s built to deliver both beauty and protection for any space.
-Versatile application: Suitable for both interior & exterior walls.
-Smart coverage: 130–150 sq. ft. per litre in a single coat.
-Smooth finish: Leaves your walls looking stylish, fresh, and refined.
-With Axee Advance Emulsion, you don’t just paint walls — you add a touch of elegance that lasts. ✨`,
-      `✨ Avon Shine – Our Most Loved Classic
-When it comes to trusted brilliance, nothing beats Avon Shine. As our most in-demand paint, it’s designed to bring vibrant beauty and lasting protection to every wall — inside or out.
-Customer favorite: The most demanded product in our range.
-Dual purpose: Perfect for both interior charm and exterior strength.
-Reliable coverage: 120 sq. ft. per litre in a single coat.
-Lasting appeal: A smooth, stylish finish that keeps your walls glowing.
-With Avon Shine, you’re not just painting — you’re choosing a trusted favorite that has earned its place in countless homes. 🏡💫`,
-      `🌟 Super Gloss – Supreme Shine at a Smart Price
-Affordable yet extraordinary, Super Gloss is our supreme product in a genuine price range. While it’s technically a distemper, its premium quality rivals that of interior emulsions, giving your walls a finish that feels luxurious without the high cost.
-Supreme value: Premium quality at a pocket-friendly price.
-Interior excellence: Distemper with the look & feel of an emulsion.
-Easy application: Mix with ½ litre of water per kg of product for best results.
-Smooth & stylish finish: Keeps your interiors looking elegant and fresh.
-With Super Gloss, you get the shine of emulsion at the price of distemper — the smart choice for beautiful interiors. ✨`,
-      `💎 High Gloss – Premium Finish at a Genuine Price
-Engineered for elegance, High Gloss is our supreme product at a genuine price point. Although classified as a distemper, its refined quality equals that of interior emulsions, offering your walls a glossy, smooth finish that looks far more premium than it costs.
-Great value: Premium performance at an affordable price.
-Emulsion-like quality: A distemper that rivals interior emulsions.
-Easy application: Mix with ½ litre of water per kg of product for best results.
-Glossy perfection: Adds a sleek, radiant touch to your interiors.
-With High Gloss, you don’t compromise — you enjoy luxury-quality walls at an everyday price. ✨`,
-      `Every great finish begins with a strong foundation. Ujjwal Gold Interior Primer is specially designed as the initial step in wall painting, applied over wall putty to create a smooth, flawless base. It enhances both coverage and shine, ensuring your walls look stunning once painted.
-Smooth foundation: Levels and prepares the wall surface.
-Enhanced coverage: Boosts paint performance and brilliance.
-Interior specialty: A high-quality cement-based primer crafted for interiors.
-Lasting finish: Helps achieve superior smoothness and long-term shine.
-With Ujjwal Gold, you lay the groundwork for walls that don’t just look painted — they look perfected. ✨`,
-      `Make every detail shine with Gold Gloss Metallic Paint. Perfect for exterior gates and decorative designs, it delivers a rich, luminous finish that catches the eye and elevates the look of any surface.
-Metallic elegance: Adds a sparkling, premium shine.
-Exterior-ready: Ideal for gates, grills, and outdoor accents.
-Decorative touch: Perfect for designs that demand attention and style.
-Durable brilliance: Keeps surfaces looking vibrant and polished.
-With Gold Gloss, ordinary surfaces transform into striking highlights of sophistication. ✨`,
-      `✨ Silver Gloss – Sleek Metallic Shine for Every Surface
-Add a touch of elegance with Silver Gloss Metallic Paint. Ideal for exterior gates and decorative designs, it delivers a smooth, reflective finish that makes every detail stand out with sophistication.
-Metallic brilliance: Gives a striking, polished shine.
-Exterior-ready: Ideal for gates, grills, and outdoor accents.
-Decorative excellence: Enhances designs with a shimmering, eye-catching effect.
-Durable finish: Maintains vibrancy and shine over time.
-With Silver Gloss, ordinary surfaces are transformed into sleek highlights of style and elegance. ✨`,
-      `✨ Gold Coat – The Ultimate Shine for Every Surface
-Make your designs gleam with Gold Coat, our most dazzling oil-based paint. Perfect for both interior and exterior gates, it delivers a luxurious, reflective finish that turns ordinary surfaces into stunning highlights.
-Maximum shine: Our most brilliant and eye-catching product.
-Versatile application: Ideal for interior and exterior gates and decorative accents.
-Oil-based durability: Long-lasting and resistant to wear.
-Elegant finish: Enhances every design with a golden glow.
-With Gold Coat, every gate and decorative element becomes a statement of sophistication and style. ✨`,
-      `✨ Silver Touch – Sleek Aluminium Shine for Your Designs
-Give your surfaces a refined metallic finish with Silver Touch. Perfect for exterior gates and decorative designs, this aluminium-based paint adds a brilliant, reflective look that enhances every detail.
-Metallic elegance: Delivers a polished, eye-catching shine.
-Exterior-ready: Ideal for gates, grills, and outdoor accents.
-Decorative highlight: Makes designs stand out with a sleek, silver finish.
-Long-lasting brilliance: Keeps surfaces looking vibrant and sophisticated.
-With Silver Touch, every gate and design element becomes a shimmering statement of style. ✨`
-    ];
     return Array.from({ length: 11 }, (_, i) => ({
       id: i + 1,
       name: productNames[i],
       image: `/products/paint${i + 1}.jpg`,
-      description: productDescriptions[i] || "Product description not available."
+      description: productDescriptions[i] || ["Product description not available."]
     }));
   };
 
@@ -130,55 +146,38 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  // Effect for automatic slide change
   useEffect(() => {
     const slideInterval = setInterval(() => {
-      setCurrentSlideIndex((prevIndex) =>
-        (prevIndex + 1) % heroImages.length
-      );
+      setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
     }, 5000);
-
     return () => clearInterval(slideInterval);
   }, [heroImages.length]);
-  
-  // UseEffect to scroll to the top when the page changes to productDetail
+
   useEffect(() => {
     if (currentPage === "productDetail") {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [currentPage]);
 
-  // Form submission handler
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
     setError(null);
-
     const form = event.target;
     const formData = new FormData(form);
-
     try {
       const response = await fetch("https://formspree.io/f/xeozpege", {
         method: "POST",
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       });
-
       if (response.ok) {
         setIsSubmitted(true);
         form.reset();
       } else {
         const data = await response.json();
-        if (data.errors) {
-          setError(data.errors.map(err => err.message).join(', '));
-        } else {
-          setError("Oops! There was a problem with your submission.");
-        }
+        if (data.errors) setError(data.errors.map(err => err.message).join(', '));
+        else setError("Oops! There was a problem with your submission.");
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
@@ -188,58 +187,39 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
   };
 
   const services = [
-    {
-      title: "Interior Wall Painting",
-      image: "/service1.jpg",
-      description:
-        "Interior paints are paints used in the interior of the building, in areas such as rooms, hallways, offices, bathrooms and kitchens."
-    },
-    {
-      title: "Exterior Wall Painting",
-      image: "/service2.jpg",
-      description:
-        "Exterior house paint is made for painting the shingles or siding of your home, not the walls of your living room, and the exterior finish of a car is on the outside."
-    },
-    {
-      title: "Waterproofing Services",
-      image: "/service3.jpg",
-      description:
-        "We offer durable and effective waterproofing coatings to protect your home from moisture and leaks."
-    }
+    { title: "Interior Wall Painting", image: "/service1.jpg", description: "Interior paints are paints used in the interior of the building, in areas such as rooms, hallways, offices, bathrooms and kitchens." },
+    { title: "Exterior Wall Painting", image: "/service2.jpg", description: "Exterior house paint is made for painting the shingles or siding of your home, not the walls of your living room, and the exterior finish of a car is on the outside." },
+    { title: "Waterproofing Services", image: "/service3.jpg", description: "We offer durable and effective waterproofing coatings to protect your home from moisture and leaks." }
   ];
 
   const testimonials = [
-    {
-      name: "Ravi Kumar",
-      message: "Sumitra Paints transformed our home with vibrant colors and excellent service! Highly recommend!",
-    },
-    {
-      name: "Pooja Sharma",
-      message: "Professional team and amazing product range. We are truly satisfied with the results.",
-    },
-    {
-      name: "Amit Verma",
-      message: "Best paint quality I've experienced. Long-lasting and beautifully finished walls.",
-    }
+    { name: "Ravi Kumar", message: "Sumitra Paints transformed our home with vibrant colors and excellent service! Highly recommend!" },
+    { name: "Pooja Sharma", message: "Professional team and amazing product range. We are truly satisfied with the results." },
+    { name: "Amit Verma", message: "Best paint quality I've experienced. Long-lasting and beautifully finished walls." }
   ];
 
-  // Conditional rendering based on the currentPage state
+  // A new function to handle the back action and scrolling
+  const handleBackToProducts = () => {
+    setCurrentPage("home");
+    // Use a setTimeout to allow the page to re-render before scrolling
+    setTimeout(() => {
+      const productsSection = document.getElementById("products");
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 0);
+  };
+
   if (currentPage === "productDetail" && selectedProduct) {
-    return (
-      <ProductDetailsPage
-        product={selectedProduct}
-        onBack={() => setCurrentPage("home")}
-      />
-    );
+    // Pass the new handleBackToProducts function to the ProductDetailsPage component
+    return <ProductDetailsPage product={selectedProduct} onBack={handleBackToProducts} />;
   }
 
-  // Main Home Page content
   return (
     <div className="font-sans">
       {/* Header */}
       <header className="bg-[#a8d5ba] text-gray-900 p-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
         <div className="flex items-center gap-2">
-          {/* Updated logo to have the image next to the text */}
           <img src="/logo.png" alt="Sumitra Paints Logo" className="w-auto h-14 md:h-20 object-contain" />
           <h1 className="text-xl md:text-2xl font-bold text-[#2e4e3f]">Sumitra Paints and Chemicals</h1>
         </div>
@@ -264,22 +244,15 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
         </div>
       )}
 
-      {/* Hero Section with Slider */}
+      {/* Hero */}
       <section className="relative h-[60vh] md:h-[85vh] overflow-hidden">
-        <div
-          className="absolute inset-0 flex transition-transform duration-1000 ease-in-out"
-          style={{ transform: `translateX(-${currentSlideIndex * 100}%)` }}
-        >
+        <div className="absolute inset-0 flex transition-transform duration-1000 ease-in-out" style={{ transform: `translateX(-${currentSlideIndex * 100}%)` }}>
           {heroImages.map((image, idx) => (
-            <div
-              key={idx}
-              className="w-full flex-shrink-0 bg-cover bg-center relative"
-              style={{ backgroundImage: `url('${image}')` }}
-            >
+            <div key={idx} className="w-full flex-shrink-0 bg-cover bg-center relative" style={{ backgroundImage: `url('${image}')` }}>
               <div className="absolute inset-0 bg-black opacity-30" />
               {idx === 0 && (
                 <h2 className="absolute bottom-10 md:bottom-1/2 right-4 md:right-16 transform md:translate-y-1/2 text-3xl md:text-5xl font-semibold leading-snug text-right z-10 drop-shadow-lg text-white">
-                  Har Deewaar Ki Apni Pehchaan 
+                  Har Deewaar Ki Apni Pehchaan
                 </h2>
               )}
             </div>
@@ -287,14 +260,7 @@ With Silver Touch, every gate and design element becomes a shimmering statement 
         </div>
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
           {heroImages.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentSlideIndex(idx)}
-              className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                currentSlideIndex === idx ? "bg-white" : "bg-gray-400 opacity-70"
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            ></button>
+            <button key={idx} onClick={() => setCurrentSlideIndex(idx)} className={`w-3 h-3 rounded-full transition-colors duration-300 ${currentSlideIndex === idx ? "bg-white" : "bg-gray-400 opacity-70"}`} aria-label={`Go to slide ${idx + 1}`}></button>
           ))}
         </div>
       </section>
@@ -524,7 +490,13 @@ function ProductDetailsPage({ product, onBack }) {
           <div>
             <h3 className="text-2xl font-bold text-[#4c8c6a] mb-1">Product Details</h3>
             <p className="text-xl font-semibold mb-4">{product.name}</p>
-            <p className="leading-relaxed">{product.description}</p>
+            {Array.isArray(product.description) ? (
+              product.description.map((line, index) => (
+                <p key={index} className="leading-relaxed mb-4">{line}</p>
+              ))
+            ) : (
+              <p className="leading-relaxed whitespace-pre-line">{product.description}</p>
+            )}
           </div>
         </div>
       </section>

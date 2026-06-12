@@ -429,7 +429,7 @@ export default function App() {
           </div>
           <div>
             <h5 className="font-bold mb-2 text-lg">Get in Touch</h5>
-            <p>Address- OC- 434 Gaur City Center, Sector 4, Greater Noida (W), Uttar Pradesh, 201009, India</p>
+            <p>Address- OC-434 Gaur City Center, Sector 4, Greater Noida (W), Uttar Pradesh, 201009, India</p>
             <p>Email- care@sumitrapaints.com</p>
             <p>Phone- +91-8882689139</p>
           </div>
